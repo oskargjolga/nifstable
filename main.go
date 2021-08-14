@@ -7,7 +7,11 @@ import (
 )
 
 func main() {
-	nifsClient := nifs.NewClient()
+	nifsClient := nifs.NewNifsClient()
 	fmt.Println(nifsClient.BaseURL)
+
+	matches := nifsClient.GetMatches()
+	fmt.Println(len(matches))
+	fmt.Println(matches)
 
 }
