@@ -10,4 +10,8 @@ func TestGetMatches(t *testing.T) {
 		// 16 teams -> 16*16-16 matches
 		t.Error("Expected 240 matches, got", len(matches))
 	}
+
+	if matches[0].HomeTeam.Name != "Aalesund" {
+		t.Error("Expected Aalesund, got", matches[0].HomeTeam.Name)
+	}
 }

@@ -33,7 +33,6 @@ func (c *NifsClient) GetMatches(tournamentId string, stageId string) []Match {
 
 	req.Header.Set("Accept", "application/json")
 
-	fmt.Println(req.Header)
 	res, getErr := client.Do(req)
 	if getErr != nil {
 		log.Fatal(getErr)
