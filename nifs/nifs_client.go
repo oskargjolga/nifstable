@@ -18,7 +18,7 @@ func NewNifsClient(baseURL string) *NifsClient {
 	}
 }
 
-func (c *NifsClient) GetMatches(tournamentId string, stageId string) []Match {
+func (c *NifsClient) FetchMatches(tournamentId string, stageId string) []Match {
 
 	url := c.BaseURL + "/tournaments/" + tournamentId + "/stages/" + stageId + "/matches/"
 	client := http.Client{
@@ -61,7 +61,7 @@ func (c *NifsClient) GetMatches(tournamentId string, stageId string) []Match {
 }
 
 // only used for testing
-func (c *NifsClient) GetMatch(matchId string) Match {
+func (c *NifsClient) FetchMatch(matchId string) Match {
 	url := c.BaseURL + "/matches/" + matchId
 	client := http.Client{
 		Timeout: time.Second * 10,

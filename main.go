@@ -15,7 +15,7 @@ const (
 func main() {
 
 	nifsClient := nifs.NewNifsClient(BaseURL)
-	matches := nifsClient.GetMatches(TournamentId, StageId)
+	matches := nifsClient.FetchMatches(TournamentId, StageId)
 	fmt.Println(len(matches))
 
 }
