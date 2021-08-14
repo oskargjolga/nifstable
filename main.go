@@ -13,9 +13,12 @@ const (
 )
 
 func main() {
-
 	nifsClient := nifs.NewNifsClient(BaseURL)
 	matches := nifsClient.FetchMatches(TournamentId, StageId)
 	fmt.Println(len(matches))
+	table := nifs.NewTable(matches, false)
+	fmt.Println(len(table.TableEntries))
+	fmt.Println(table)
+	fmt.Println(table.TableEntries[0].Points)
 
 }
