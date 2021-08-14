@@ -5,7 +5,10 @@ import (
 )
 
 func (match *Match) GetHomeTeamResult(halftime bool) Result {
-	result := Result{teamName: match.HomeTeam.Name}
+	result := Result{
+		teamName: match.HomeTeam.Name,
+		points:   match.getHomeTeamPoints(halftime),
+	}
 	if halftime {
 		result.goals = match.Result.HomeScore45
 	} else {
@@ -15,13 +18,56 @@ func (match *Match) GetHomeTeamResult(halftime bool) Result {
 }
 
 func (match *Match) GetAwayTeamResult(halftime bool) Result {
-	result := Result{teamName: match.AwayTeam.Name}
+	result := Result{
+		teamName: match.AwayTeam.Name,
+		points:   match.getAwayTeamPoints(halftime),
+	}
 	if halftime {
 		result.goals = match.Result.AwayScore45
 	} else {
 		result.goals = match.Result.AwayScore90
 	}
 	return result
+}
+
+func (match *Match) getAwayTeamPoints(halftime bool) int {
+	if halftime {
+		if match.Result.AwayScore45 > match.Result.HomeScore45 {
+			return 3
+		} else if match.Result.AwayScore45 == match.Result.HomeScore45 {
+			return 1
+		} else {
+			return 0
+		}
+	} else {
+		if match.Result.AwayScore90 > match.Result.HomeScore90 {
+			return 3
+		} else if match.Result.AwayScore90 == match.Result.HomeScore90 {
+			return 1
+		} else {
+			return 0
+		}
+	}
+}
+
+func (match *Match) getHomeTeamPoints(halftime bool) int {
+	if halftime {
+		if match.Result.HomeScore45 > match.Result.AwayScore45 {
+			return 3
+		} else if match.Result.HomeScore45 == match.Result.AwayScore45 {
+			return 1
+		} else {
+			return 0
+		}
+	} else {
+		if match.Result.HomeScore90 > match.Result.AwayScore90 {
+			return 3
+		} else if match.Result.HomeScore90 == match.Result.AwayScore90 {
+			return 1
+		} else {
+			return 0
+		}
+	}
 }
 
 // Generated using https://mholt.github.io/json-to-go/
