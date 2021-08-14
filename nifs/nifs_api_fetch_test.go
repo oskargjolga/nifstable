@@ -15,3 +15,12 @@ func TestGetMatches(t *testing.T) {
 		t.Error("Expected Aalesund, got", matches[0].HomeTeam.Name)
 	}
 }
+
+func TestGetMatch(t *testing.T) {
+	c := NewNifsClient("https://api.nifs.no")
+
+	match := c.GetMatch("1800721")
+	if match.Name != "Aalesund - Molde" {
+		t.Error("Expected Aalesund - Molde, got", match.Name)
+	}
+}
