@@ -6,12 +6,15 @@ import (
 	"github.com/oskargjolga/nifstable/nifs"
 )
 
-func main() {
-	nifsClient := nifs.NewNifsClient()
-	fmt.Println(nifsClient.BaseURL)
+const (
+	BaseURL      = "https://api.nifs.no"
+	TournamentId = "5"      // Tournament id for eliteserien
+	StageId      = "682936" // Stage id for eliteserien 2020 season
+)
 
-	matches := nifsClient.GetMatches()
+func main() {
+	nifsClient := nifs.NewNifsClient(BaseURL)
+	matches := nifsClient.GetMatches(TournamentId, StageId)
 	fmt.Println(len(matches))
-	fmt.Println(matches)
 
 }

@@ -1,11 +1,8 @@
 package nifs
 
-import "net/http"
-
-const (
-	BaseURL      = "https://api.nifs.no"
-	TournamentId = "5"
-	StageId      = "682936" // Stage id for eliteserien 2020
+import (
+	"net/http"
+	"time"
 )
 
 type NifsClient struct {
@@ -13,9 +10,9 @@ type NifsClient struct {
 	HTTPClient *http.Client
 }
 
-func NewNifsClient() *NifsClient {
+func NewNifsClient(baseURL string) *NifsClient {
 	return &NifsClient{
-		BaseURL:    BaseURL,
-		HTTPClient: http.DefaultClient,
+		BaseURL:    baseURL,
+		HTTPClient: &http.Client{Timeout: 5 * time.Second},
 	}
 }

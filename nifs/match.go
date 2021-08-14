@@ -6,23 +6,37 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
-func (c *NifsClient) GetMatches() []Match {
-	response, err := http.Get(c.BaseURL + "/tournaments/" + TournamentId + "/stages/" + StageId + "/matches/")
-	if err != nil {
-		fmt.Print(err.Error())
-		os.Exit(1)
-	}
-
-	responseData, err := ioutil.ReadAll(response.Body)
+func (c *NifsClient) GetMatches(tournamentId string, stageId string) []Match {
+	url := c.BaseURL + "/tournaments/" + tournamentId + "/stages/" + stageId + "/matches/"
+	fmt.Println(url)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
+	res, getErr := c.HTTPClient.Do(req)
+	if getErr != nil {
+		log.Fatal(getErr)
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	fmt.Println(res.Status)
+	body, readErr := ioutil.ReadAll(res.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
+	}
+
 	var matches []Match
-	json.Unmarshal(responseData, &matches)
+	jsonErr := json.Unmarshal(body, &matches)
+	if jsonErr != nil {
+
+		log.Fatal(jsonErr)
+	}
 
 	return matches
 
