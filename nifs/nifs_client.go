@@ -5,6 +5,7 @@ import "net/http"
 const (
 	BaseURL      = "https://api.nifs.no"
 	TournamentId = 5
+	StageId      = 682936 // Stage id for eliteserien 2020
 )
 
 type NifsClient struct {
