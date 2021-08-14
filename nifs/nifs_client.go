@@ -4,8 +4,8 @@ import "net/http"
 
 const (
 	BaseURL      = "https://api.nifs.no"
-	TournamentId = 5
-	StageId      = 682936 // Stage id for eliteserien 2020
+	TournamentId = "5"
+	StageId      = "682936" // Stage id for eliteserien 2020
 )
 
 type NifsClient struct {
@@ -13,7 +13,7 @@ type NifsClient struct {
 	HTTPClient *http.Client
 }
 
-func NewClient() *NifsClient {
+func NewNifsClient() *NifsClient {
 	return &NifsClient{
 		BaseURL:    BaseURL,
 		HTTPClient: http.DefaultClient,

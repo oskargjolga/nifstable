@@ -1,11 +1,31 @@
 package nifs
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
 	"time"
 )
 
-func (c *NifsClient) GetMatches(path string) string {
-	return "Not implemented"
+func (c *NifsClient) GetMatches() []Match {
+	response, err := http.Get(c.BaseURL + "/tournaments/" + TournamentId + "/stages/" + StageId + "/matches/")
+	if err != nil {
+		fmt.Print(err.Error())
+		os.Exit(1)
+	}
+
+	responseData, err := ioutil.ReadAll(response.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var matches []Match
+	json.Unmarshal(responseData, &matches)
+
+	return matches
+
 }
 
 // Generated using https://mholt.github.io/json-to-go/
