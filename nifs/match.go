@@ -1,45 +1,14 @@
 package nifs
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"log"
-	"net/http"
 	"time"
 )
 
-func (c *NifsClient) GetMatches(tournamentId string, stageId string) []Match {
-	url := c.BaseURL + "/tournaments/" + tournamentId + "/stages/" + stageId + "/matches/"
-	fmt.Println(url)
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	res, getErr := c.HTTPClient.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	fmt.Println(res.Status)
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
-
-	var matches []Match
-	jsonErr := json.Unmarshal(body, &matches)
-	if jsonErr != nil {
-
-		log.Fatal(jsonErr)
-	}
-
-	return matches
-
+func (match *Match) GetWinnerFullTime() int {
+	return 2
+}
+func (match *Match) GetWinnerHalfTime() int {
+	return 2
 }
 
 // Generated using https://mholt.github.io/json-to-go/
