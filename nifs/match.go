@@ -4,11 +4,24 @@ import (
 	"time"
 )
 
-func (match *Match) GetWinnerFullTime() int {
-	return 2
+func (match *Match) GetHomeTeamResult(halftime bool) Result {
+	result := Result{teamName: match.HomeTeam.Name}
+	if halftime {
+		result.goals = match.Result.HomeScore45
+	} else {
+		result.goals = match.Result.HomeScore90
+	}
+	return result
 }
-func (match *Match) GetWinnerHalfTime() int {
-	return 2
+
+func (match *Match) GetAwayTeamResult(halftime bool) Result {
+	result := Result{teamName: match.AwayTeam.Name}
+	if halftime {
+		result.goals = match.Result.AwayScore45
+	} else {
+		result.goals = match.Result.AwayScore90
+	}
+	return result
 }
 
 // Generated using https://mholt.github.io/json-to-go/
