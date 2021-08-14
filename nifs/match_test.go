@@ -19,6 +19,7 @@ func TestGetResult(t *testing.T) {
 	}{
 		{"Rosenborg-Kristiansund(0,0)", "1800723", 0, 0, 0, 0, 1, 1, 1, 1},
 		{"Strømsgodset-Sandefjord(1, 2)->(3, 4)", "1805724", 1, 2, 3, 4, 0, 3, 0, 3},
+		{"Mjøndalen-Molde(1, 0)->(1, 3)", "1847913", 1, 0, 1, 3, 3, 0, 0, 3},
 	}
 
 	c := NewNifsClient("https://api.nifs.no")
