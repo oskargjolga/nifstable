@@ -23,20 +23,20 @@ func NewTable(matches []Match, halftime bool) *Table {
 		homeTeamResult := match.GetHomeTeamResult(halftime)
 		awayTeamResult := match.GetAwayTeamResult(halftime)
 		if val, ok := m[homeTeamResult.TeamId]; ok {
-			val.AddResult(homeTeamResult.Goals, homeTeamResult.Points)
+			val.AddResult(homeTeamResult)
 			m[homeTeamResult.TeamId] = val
 		} else {
 			entry := TableEntry{TeamName: match.GetHomeTeamName()}
-			entry.AddResult(homeTeamResult.Goals, homeTeamResult.Points)
+			entry.AddResult(homeTeamResult)
 			m[homeTeamResult.TeamId] = entry
 		}
 
 		if val, ok := m[awayTeamResult.TeamId]; ok {
-			val.AddResult(awayTeamResult.Goals, awayTeamResult.Points)
+			val.AddResult(awayTeamResult)
 			m[awayTeamResult.TeamId] = val
 		} else {
 			entry := TableEntry{TeamName: match.GetAwayTeamName()}
-			entry.AddResult(awayTeamResult.Goals, awayTeamResult.Points)
+			entry.AddResult(awayTeamResult)
 			m[awayTeamResult.TeamId] = entry
 		}
 	}
@@ -45,31 +45,4 @@ func NewTable(matches []Match, halftime bool) *Table {
 	}
 
 	return table
-}
-
-type TableEntry struct {
-	TeamName      string
-	MatchesPlayed int
-	Goals         int
-	Points        int
-	Wins          int
-	Losses        int
-	Draws         int
-}
-
-func (t *TableEntry) AddResult(goals int, points int) {
-	t.MatchesPlayed++
-	t.Goals += goals
-	t.Points += points
-	if points == 3 {
-		t.Wins++
-	} else if points == 1 {
-		t.Draws++
-	} else {
-		t.Losses++
-	}
-}
-
-func (t TableEntry) String() string {
-	return fmt.Sprintf("%s 		%d", t.TeamName, t.Points)
 }
