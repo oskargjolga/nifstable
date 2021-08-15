@@ -1,6 +1,7 @@
 package nifs
 
 type MatchResult struct {
+	HasResult    bool
 	TeamId       int
 	TeamName     string
 	Points       int

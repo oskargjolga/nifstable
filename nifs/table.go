@@ -40,6 +40,9 @@ func NewTable(matches []Match, halftime bool) *Table {
 	m := make(map[int]TableEntry)
 	for _, match := range matches {
 		homeTeamResult := match.GetHomeTeamResult(halftime)
+		if !homeTeamResult.HasResult {
+			continue
+		}
 		awayTeamResult := match.GetAwayTeamResult(halftime)
 		if val, ok := m[homeTeamResult.TeamId]; ok {
 			val.AddResult(homeTeamResult)

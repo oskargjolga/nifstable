@@ -8,7 +8,6 @@ table-halftime: docker-build docker-run-halftime
 docker-build:
 	@docker build --tag nifstable .
 
-
 docker-run:
 	@docker run nifstable
 
