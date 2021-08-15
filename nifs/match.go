@@ -20,8 +20,8 @@ func (match *Match) GetAwayTeamName() string {
 	return match.AwayTeam.Name
 }
 
-func (match *Match) GetHomeTeamResult(halftime bool) Result {
-	result := Result{
+func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
+	result := MatchResult{
 		TeamName: match.HomeTeam.Name,
 		Points:   match.getHomeTeamPoints(halftime),
 	}
@@ -35,8 +35,8 @@ func (match *Match) GetHomeTeamResult(halftime bool) Result {
 	return result
 }
 
-func (match *Match) GetAwayTeamResult(halftime bool) Result {
-	result := Result{
+func (match *Match) GetAwayTeamResult(halftime bool) MatchResult {
+	result := MatchResult{
 		TeamName: match.AwayTeam.Name,
 		Points:   match.getAwayTeamPoints(halftime),
 	}

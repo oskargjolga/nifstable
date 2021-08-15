@@ -1,12 +1,12 @@
 package nifs
 
-type Result struct {
+type MatchResult struct {
 	TeamName     string
 	Points       int
 	Goals        int
 	GoalsAgainst int
 }
 
-func (r *Result) GoalDiff() int {
+func (r *MatchResult) GoalDiff() int {
 	return r.Goals - r.GoalsAgainst
 }
