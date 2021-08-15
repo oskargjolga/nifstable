@@ -46,7 +46,7 @@ func NewTable(matches []Match, halftime bool) *Table {
 	for _, v := range m {
 		table.TableEntries = append(table.TableEntries, v)
 	}
-	sort.Sort(ByPoints(table.TableEntries))
+	sort.Sort(ByPointsAndGoalDiff(table.TableEntries))
 
 	return table
 }
