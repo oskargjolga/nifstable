@@ -12,8 +12,8 @@ type Table struct {
 
 func (t *Table) String() string {
 	var s string
-	for _, entry := range t.TableEntries {
-		s += fmt.Sprintf("%v\n", entry)
+	for i, entry := range t.TableEntries {
+		s += fmt.Sprintf("#%d	%v\n", i+1, entry)
 	}
 	return s
 }
