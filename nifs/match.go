@@ -4,14 +4,6 @@ import (
 	"time"
 )
 
-func (match *Match) GetHomeTeamId() int {
-	return match.HomeTeam.ID
-}
-
-func (match *Match) GetAwayTeamId() int {
-	return match.AwayTeam.ID
-}
-
 func (match *Match) GetHomeTeamName() string {
 	return match.HomeTeam.Name
 }
@@ -22,6 +14,7 @@ func (match *Match) GetAwayTeamName() string {
 
 func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
 	result := MatchResult{
+		TeamId:   match.HomeTeam.ID,
 		TeamName: match.HomeTeam.Name,
 		Points:   match.getHomeTeamPoints(halftime),
 	}
@@ -37,6 +30,7 @@ func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
 
 func (match *Match) GetAwayTeamResult(halftime bool) MatchResult {
 	result := MatchResult{
+		TeamId:   match.AwayTeam.ID,
 		TeamName: match.AwayTeam.Name,
 		Points:   match.getAwayTeamPoints(halftime),
 	}

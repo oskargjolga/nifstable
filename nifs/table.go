@@ -22,22 +22,22 @@ func NewTable(matches []Match, halftime bool) *Table {
 	for _, match := range matches {
 		homeTeamResult := match.GetHomeTeamResult(halftime)
 		awayTeamResult := match.GetAwayTeamResult(halftime)
-		if val, ok := m[match.GetHomeTeamId()]; ok {
+		if val, ok := m[homeTeamResult.TeamId]; ok {
 			val.AddResult(homeTeamResult.Goals, homeTeamResult.Points)
-			m[match.GetHomeTeamId()] = val
+			m[homeTeamResult.TeamId] = val
 		} else {
 			entry := TableEntry{TeamName: match.GetHomeTeamName()}
 			entry.AddResult(homeTeamResult.Goals, homeTeamResult.Points)
-			m[match.GetHomeTeamId()] = entry
+			m[homeTeamResult.TeamId] = entry
 		}
 
-		if val, ok := m[match.GetAwayTeamId()]; ok {
+		if val, ok := m[awayTeamResult.TeamId]; ok {
 			val.AddResult(awayTeamResult.Goals, awayTeamResult.Points)
-			m[match.GetAwayTeamId()] = val
+			m[awayTeamResult.TeamId] = val
 		} else {
 			entry := TableEntry{TeamName: match.GetAwayTeamName()}
 			entry.AddResult(awayTeamResult.Goals, awayTeamResult.Points)
-			m[match.GetAwayTeamId()] = entry
+			m[awayTeamResult.TeamId] = entry
 		}
 	}
 	for _, v := range m {
