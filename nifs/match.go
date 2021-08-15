@@ -13,11 +13,7 @@ func (match *Match) GetAwayTeamName() string {
 }
 
 func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
-	result := MatchResult{
-		TeamId:   match.HomeTeam.ID,
-		TeamName: match.HomeTeam.Name,
-		Points:   match.getHomeTeamPoints(halftime),
-	}
+	result := NewMatchResult(match.HomeTeam.ID, match.HomeTeam.Name, match.getHomeTeamPoints(halftime))
 	if halftime {
 		result.Goals = match.Result.HomeScore45
 		result.GoalsAgainst = match.Result.AwayScore45
@@ -29,11 +25,7 @@ func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
 }
 
 func (match *Match) GetAwayTeamResult(halftime bool) MatchResult {
-	result := MatchResult{
-		TeamId:   match.AwayTeam.ID,
-		TeamName: match.AwayTeam.Name,
-		Points:   match.getAwayTeamPoints(halftime),
-	}
+	result := NewMatchResult(match.AwayTeam.ID, match.AwayTeam.Name, match.getAwayTeamPoints(halftime))
 	if halftime {
 		result.Goals = match.Result.AwayScore45
 		result.GoalsAgainst = match.Result.HomeScore45
