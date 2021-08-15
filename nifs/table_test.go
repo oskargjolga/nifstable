@@ -20,5 +20,35 @@ func TestSortByPointsAndGoalDiff(t *testing.T) {
 			t.Errorf("want %s got %s", wantOrder[i], entry.TeamName)
 		}
 	}
+}
 
+func TestTableOrder(t *testing.T) {
+	var wantOrder = []string{
+		"Bodø/Glimt",
+		"Molde",
+		"Vålerenga",
+		"Rosenborg",
+		"Kristiansund",
+		"Viking",
+		"Odd",
+		"Stabæk",
+		"Haugesund",
+		"Brann",
+		"Sandefjord",
+		"Sarpsborg 08",
+		"Strømsgodset",
+		"Mjøndalen",
+		"Start",
+		"Aalesund",
+	}
+
+	nifsClient := NewNifsClient("https://api.nifs.no")
+	matches := nifsClient.FetchMatches("5", "682936")
+	table := NewTable(matches, false)
+
+	for i, entry := range table.TableEntries {
+		if entry.TeamName != wantOrder[i] {
+			t.Errorf("want %s got %s", wantOrder[i], entry.TeamName)
+		}
+	}
 }
