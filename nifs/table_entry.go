@@ -1,11 +1,5 @@
 package nifs
 
-import (
-	"fmt"
-	"strings"
-	"unicode/utf8"
-)
-
 const (
 	TEAM_NAME_MAX_WIDTH = 20
 )
@@ -37,23 +31,4 @@ func (t *TableEntry) AddResult(result MatchResult) {
 
 func (t *TableEntry) GoalDiff() int {
 	return t.Goals - t.GoalsAgainst
-}
-
-func (t *TableEntry) separator() string {
-	return strings.Repeat(" ", TEAM_NAME_MAX_WIDTH-utf8.RuneCountInString(t.TeamName))
-}
-
-func (t TableEntry) String() string {
-	return fmt.Sprintf("%s%s%d\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
-		t.TeamName,
-		t.separator(),
-		t.MatchesPlayed,
-		t.Wins,
-		t.Draws,
-		t.Losses,
-		t.Goals,
-		t.GoalsAgainst,
-		t.GoalDiff(),
-		t.Points,
-	)
 }

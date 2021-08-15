@@ -2,9 +2,11 @@ package nifs
 
 import (
 	"fmt"
+	"os"
 	"sort"
-	"strings"
-	"unicode/utf8"
+	"strconv"
+
+	tablewriter "github.com/olekukonko/tablewriter"
 )
 
 type Table struct {
@@ -12,37 +14,24 @@ type Table struct {
 	TableEntries []TableEntry
 }
 
-func (t Table) String() string {
-	var s string
-	s += "\n"
-	s += t.Name + "\n"
-	th := t.tableHeader()
-	s += strings.Repeat("-", utf8.RuneCountInString(th)) + "\n"
-	s += t.tableHeader()
-	s += "\n"
+func (t *Table) Render() {
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Pos", "Club", "P", "W", "D", "L", "GF", "GA", "GD", "Pts"})
 	for i, entry := range t.TableEntries {
-		s +=
-
-			fmt.Sprintf("#%d	%v\n", i+1, entry)
+		table.Append([]string{
+			fmt.Sprintf("#%d", i+1),
+			entry.TeamName,
+			strconv.Itoa(entry.MatchesPlayed),
+			strconv.Itoa(entry.Wins),
+			strconv.Itoa(entry.Draws),
+			strconv.Itoa(entry.Losses),
+			strconv.Itoa(entry.Goals),
+			strconv.Itoa(entry.GoalsAgainst),
+			strconv.Itoa(entry.GoalDiff()),
+			strconv.Itoa(entry.Points),
+		})
 	}
-	return s
-}
-
-func (t Table) tableHeader() string {
-	s := "Pos\t"
-	s += "Club"
-	s += strings.Repeat(" ", TEAM_NAME_MAX_WIDTH-utf8.RuneCountInString("Club"))
-	s += "P\t\t"
-	s += "W\t"
-	s += "D\t"
-	s += "L\t"
-	s += "GF\t"
-	s += "GF\t"
-	s += "GD\t"
-	s += "Pts\t"
-
-	s += "\n"
-	return s
+	table.Render()
 }
 
 func NewTable(matches []Match, halftime bool) *Table {

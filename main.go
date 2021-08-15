@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/oskargjolga/nifstable/nifs"
 )
 
@@ -16,5 +14,5 @@ func main() {
 	nifsClient := nifs.NewNifsClient(BaseURL)
 	matches := nifsClient.FetchMatches(TournamentId, StageId)
 	table := nifs.NewTable(matches, false)
-	fmt.Println(table)
+	table.Render()
 }
