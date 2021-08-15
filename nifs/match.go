@@ -27,8 +27,10 @@ func (match *Match) GetHomeTeamResult(halftime bool) Result {
 	}
 	if halftime {
 		result.Goals = match.Result.HomeScore45
+		result.GoalsAgainst = match.Result.AwayScore45
 	} else {
 		result.Goals = match.Result.HomeScore90
+		result.GoalsAgainst = match.Result.AwayScore90
 	}
 	return result
 }
@@ -40,8 +42,10 @@ func (match *Match) GetAwayTeamResult(halftime bool) Result {
 	}
 	if halftime {
 		result.Goals = match.Result.AwayScore45
+		result.GoalsAgainst = match.Result.HomeScore45
 	} else {
 		result.Goals = match.Result.AwayScore90
+		result.GoalsAgainst = match.Result.HomeScore90
 	}
 	return result
 }

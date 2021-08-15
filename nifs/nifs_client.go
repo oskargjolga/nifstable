@@ -2,6 +2,7 @@ package nifs
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -18,27 +19,18 @@ func NewNifsClient(baseURL string) *NifsClient {
 	}
 }
 
-func (c *NifsClient) FetchMatches(tournamentId string, stageId string) []Match {
-
-	url := c.BaseURL + "/tournaments/" + tournamentId + "/stages/" + stageId + "/matches/"
+func (c *NifsClient) PerformRequest(req *http.Request) ([]byte, error) {
 	client := http.Client{
 		Timeout: time.Second * 10,
 	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	req.Header.Set("Accept", "application/json")
-
 	res, getErr := client.Do(req)
 	if getErr != nil {
-		log.Fatal(getErr)
+		return nil, getErr
 	}
 
 	if res.StatusCode != http.StatusOK {
-		log.Fatal(res.Status)
+		return nil, errors.New(res.Status)
 	}
 
 	if res.Body != nil {
@@ -47,7 +39,24 @@ func (c *NifsClient) FetchMatches(tournamentId string, stageId string) []Match {
 
 	body, readErr := ioutil.ReadAll(res.Body)
 	if readErr != nil {
-		log.Fatal(readErr)
+		return nil, readErr
+	}
+
+	return body, nil
+}
+
+func (c *NifsClient) FetchMatches(tournamentId string, stageId string) []Match {
+
+	url := c.BaseURL + "/tournaments/" + tournamentId + "/stages/" + stageId + "/matches/"
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	body, err := c.PerformRequest(req)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	var matches []Match
@@ -60,12 +69,9 @@ func (c *NifsClient) FetchMatches(tournamentId string, stageId string) []Match {
 
 }
 
-// only used for testing
+// used for testing
 func (c *NifsClient) FetchMatch(matchId string) Match {
 	url := c.BaseURL + "/matches/" + matchId
-	client := http.Client{
-		Timeout: time.Second * 10,
-	}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -74,24 +80,10 @@ func (c *NifsClient) FetchMatch(matchId string) Match {
 
 	req.Header.Set("Accept", "application/json")
 
-	res, getErr := client.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
+	body, err := c.PerformRequest(req)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	if res.StatusCode != http.StatusOK {
-		log.Fatal(res.Status)
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
-
 	var match Match
 	jsonErr := json.Unmarshal(body, &match)
 	if jsonErr != nil {
