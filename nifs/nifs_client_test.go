@@ -1,6 +1,9 @@
 package nifs
 
-import "testing"
+import (
+	"net/http"
+	"testing"
+)
 
 func TestFetchMatches(t *testing.T) {
 	c := NewNifsClient("https://api.nifs.no")
@@ -23,4 +26,26 @@ func TestFetchMatch(t *testing.T) {
 	if match.Name != "Aalesund - Molde" {
 		t.Error("Expected Aalesund - Molde, got", match.Name)
 	}
+}
+
+func TestPerformRequest(t *testing.T) {
+	tests := []struct {
+		url string
+		err error
+	}{
+		{"https://api.nifs.no/api/v1/matches/1800721", nil},
+	}
+
+	for _, test := range tests {
+		c := NewNifsClient("https://api.nifs.no")
+		req, err := http.NewRequest(http.MethodGet, test.url, nil)
+		if err != nil {
+			t.Error(err)
+		}
+		_, err = c.PerformRequest(req)
+		if err != test.err {
+			t.Error("Expected", test.err, "got", err)
+		}
+	}
+
 }

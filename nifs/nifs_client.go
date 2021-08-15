@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -78,7 +79,7 @@ func (c *NifsClient) PerformRequest(req *http.Request) ([]byte, error) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		return nil, errors.New(res.Status)
+		return nil, errors.New(strconv.Itoa(res.StatusCode))
 	}
 
 	if res.Body != nil {

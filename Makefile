@@ -8,5 +8,5 @@ docker-build:
 docker-run:
 	@docker run nifstable
 
-docker-cleanup:
+docker-remove:
 	@docker rmi nifstable --force
