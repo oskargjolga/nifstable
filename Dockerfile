@@ -15,4 +15,4 @@ COPY /nifs /app/nifs
 RUN go build -o /nifstable
 
 # Run
-CMD [ "/nifstable" ]
+ENTRYPOINT [ "/nifstable" ]

@@ -1,6 +1,8 @@
 test:
 	@go test -v ./...
 
+make docker-build-and-run: docker-build docker-run
+
 docker-build:
 	@docker build --tag nifstable .
 

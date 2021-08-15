@@ -1,6 +1,8 @@
 package main
 
 import (
+	"flag"
+
 	"github.com/oskargjolga/nifstable/nifs"
 )
 
@@ -11,8 +13,11 @@ const (
 )
 
 func main() {
+	halftime := flag.Bool("halftime", false, "compute table based on first 45 minutes of all matches")
+	flag.Parse()
+
 	nifsClient := nifs.NewNifsClient(BaseURL)
 	matches := nifsClient.FetchMatches(TournamentId, StageId)
-	table := nifs.NewTable(matches, false)
+	table := nifs.NewTable(matches, *halftime)
 	table.Render()
 }
