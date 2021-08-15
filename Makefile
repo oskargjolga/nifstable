@@ -1,13 +1,19 @@
 test:
 	@go test -v ./...
 
-make docker-build-and-run: docker-build docker-run
+table: docker-build docker-run
+
+table-halftime: docker-build docker-run-halftime
 
 docker-build:
 	@docker build --tag nifstable .
 
+
 docker-run:
 	@docker run nifstable
+
+docker-run-halftime:
+	@docker run nifstable -halftime
 
 docker-remove:
 	@docker rmi nifstable --force
