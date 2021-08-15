@@ -19,32 +19,6 @@ func NewNifsClient(baseURL string) *NifsClient {
 	}
 }
 
-func (c *NifsClient) PerformRequest(req *http.Request) ([]byte, error) {
-	client := http.Client{
-		Timeout: time.Second * 10,
-	}
-	req.Header.Set("Accept", "application/json")
-	res, getErr := client.Do(req)
-	if getErr != nil {
-		return nil, getErr
-	}
-
-	if res.StatusCode != http.StatusOK {
-		return nil, errors.New(res.Status)
-	}
-
-	if res.Body != nil {
-		defer res.Body.Close()
-	}
-
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		return nil, readErr
-	}
-
-	return body, nil
-}
-
 func (c *NifsClient) FetchMatches(tournamentId string, stageId string) []Match {
 
 	url := c.BaseURL + "/tournaments/" + tournamentId + "/stages/" + stageId + "/matches/"
@@ -91,4 +65,30 @@ func (c *NifsClient) FetchMatch(matchId string) Match {
 	}
 
 	return match
+}
+
+func (c *NifsClient) PerformRequest(req *http.Request) ([]byte, error) {
+	client := http.Client{
+		Timeout: time.Second * 10,
+	}
+	req.Header.Set("Accept", "application/json")
+	res, getErr := client.Do(req)
+	if getErr != nil {
+		return nil, getErr
+	}
+
+	if res.StatusCode != http.StatusOK {
+		return nil, errors.New(res.Status)
+	}
+
+	if res.Body != nil {
+		defer res.Body.Close()
+	}
+
+	body, readErr := ioutil.ReadAll(res.Body)
+	if readErr != nil {
+		return nil, readErr
+	}
+
+	return body, nil
 }
