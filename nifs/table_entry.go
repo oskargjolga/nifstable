@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	TEAM_NAME_WIDTH = 20
+	TEAM_NAME_MAX_WIDTH = 20
 )
 
 type TableEntry struct {
@@ -40,20 +40,20 @@ func (t *TableEntry) GoalDiff() int {
 }
 
 func (t *TableEntry) separator() string {
-	return strings.Repeat(" ", TEAM_NAME_WIDTH-utf8.RuneCountInString(t.TeamName))
+	return strings.Repeat(" ", TEAM_NAME_MAX_WIDTH-utf8.RuneCountInString(t.TeamName))
 }
 
 func (t TableEntry) String() string {
-	return fmt.Sprintf("%s%s%d", t.TeamName, t.separator(), t.Points)
+	return fmt.Sprintf("%s%s%d\t\t%d\t%d\t%d\t%d\t%d\t%d\t%d",
+		t.TeamName,
+		t.separator(),
+		t.MatchesPlayed,
+		t.Wins,
+		t.Draws,
+		t.Losses,
+		t.Goals,
+		t.GoalsAgainst,
+		t.GoalDiff(),
+		t.Points,
+	)
 }
-
-type ByPointsAndGoalDiff []TableEntry
-
-func (a ByPointsAndGoalDiff) Len() int { return len(a) }
-func (a ByPointsAndGoalDiff) Less(i, j int) bool {
-	if a[i].Points == a[j].Points {
-		return a[i].GoalDiff() > a[j].GoalDiff()
-	}
-	return a[i].Points > a[j].Points
-}
-func (a ByPointsAndGoalDiff) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
