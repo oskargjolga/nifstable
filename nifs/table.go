@@ -1,6 +1,9 @@
 package nifs
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 type Table struct {
 	Name         string
@@ -43,6 +46,7 @@ func NewTable(matches []Match, halftime bool) *Table {
 	for _, v := range m {
 		table.TableEntries = append(table.TableEntries, v)
 	}
+	sort.Sort(ByPoints(table.TableEntries))
 
 	return table
 }

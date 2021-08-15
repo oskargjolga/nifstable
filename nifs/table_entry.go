@@ -46,3 +46,9 @@ func (t *TableEntry) separator() string {
 func (t TableEntry) String() string {
 	return fmt.Sprintf("%s%s%d", t.TeamName, t.separator(), t.Points)
 }
+
+type ByPoints []TableEntry
+
+func (a ByPoints) Len() int           { return len(a) }
+func (a ByPoints) Less(i, j int) bool { return a[i].Points > a[j].Points }
+func (a ByPoints) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
