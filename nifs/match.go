@@ -22,26 +22,26 @@ func (match *Match) GetAwayTeamName() string {
 
 func (match *Match) GetHomeTeamResult(halftime bool) Result {
 	result := Result{
-		teamName: match.HomeTeam.Name,
-		points:   match.getHomeTeamPoints(halftime),
+		TeamName: match.HomeTeam.Name,
+		Points:   match.getHomeTeamPoints(halftime),
 	}
 	if halftime {
-		result.goals = match.Result.HomeScore45
+		result.Goals = match.Result.HomeScore45
 	} else {
-		result.goals = match.Result.HomeScore90
+		result.Goals = match.Result.HomeScore90
 	}
 	return result
 }
 
 func (match *Match) GetAwayTeamResult(halftime bool) Result {
 	result := Result{
-		teamName: match.AwayTeam.Name,
-		points:   match.getAwayTeamPoints(halftime),
+		TeamName: match.AwayTeam.Name,
+		Points:   match.getAwayTeamPoints(halftime),
 	}
 	if halftime {
-		result.goals = match.Result.AwayScore45
+		result.Goals = match.Result.AwayScore45
 	} else {
-		result.goals = match.Result.AwayScore90
+		result.Goals = match.Result.AwayScore90
 	}
 	return result
 }

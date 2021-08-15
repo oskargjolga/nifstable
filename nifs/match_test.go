@@ -31,29 +31,29 @@ func TestGetResult(t *testing.T) {
 			awayResultHalfTime := match.GetAwayTeamResult(true)
 			homeResultFullTime := match.GetHomeTeamResult(false)
 			awayResultFullTime := match.GetAwayTeamResult(false)
-			if homeResultHalfTime.goals != test.wantHalfTimeGoalsHome {
-				t.Errorf("want %d, got %d", test.wantHalfTimeGoalsHome, homeResultHalfTime.goals)
+			if homeResultHalfTime.Goals != test.wantHalfTimeGoalsHome {
+				t.Errorf("want %d, got %d", test.wantHalfTimeGoalsHome, homeResultHalfTime.Goals)
 			}
-			if awayResultHalfTime.goals != test.wantHalfTimeGoalsAway {
-				t.Errorf("want %d, got %d", test.wantHalfTimeGoalsAway, awayResultHalfTime.goals)
+			if awayResultHalfTime.Goals != test.wantHalfTimeGoalsAway {
+				t.Errorf("want %d, got %d", test.wantHalfTimeGoalsAway, awayResultHalfTime.Goals)
 			}
-			if homeResultFullTime.goals != test.wantFullTimeGoalsHome {
-				t.Errorf("want %d, got %d", test.wantFullTimeGoalsHome, homeResultFullTime.goals)
+			if homeResultFullTime.Goals != test.wantFullTimeGoalsHome {
+				t.Errorf("want %d, got %d", test.wantFullTimeGoalsHome, homeResultFullTime.Goals)
 			}
-			if awayResultFullTime.goals != test.wantFullTimeGoalsAway {
-				t.Errorf("want %d, got %d", test.wantFullTimeGoalsAway, awayResultFullTime.goals)
+			if awayResultFullTime.Goals != test.wantFullTimeGoalsAway {
+				t.Errorf("want %d, got %d", test.wantFullTimeGoalsAway, awayResultFullTime.Goals)
 			}
-			if homeResultHalfTime.points != test.wantHalfTimePointsHome {
-				t.Errorf("want %d, got %d", test.wantHalfTimePointsHome, homeResultHalfTime.points)
+			if homeResultHalfTime.Points != test.wantHalfTimePointsHome {
+				t.Errorf("want %d, got %d", test.wantHalfTimePointsHome, homeResultHalfTime.Points)
 			}
-			if awayResultHalfTime.points != test.wantHalfTimePointsAway {
-				t.Errorf("want %d, got %d", test.wantHalfTimePointsAway, awayResultHalfTime.points)
+			if awayResultHalfTime.Points != test.wantHalfTimePointsAway {
+				t.Errorf("want %d, got %d", test.wantHalfTimePointsAway, awayResultHalfTime.Points)
 			}
-			if homeResultFullTime.points != test.wantFullTimePointsHome {
-				t.Errorf("want %d, got %d", test.wantFullTimePointsHome, homeResultFullTime.points)
+			if homeResultFullTime.Points != test.wantFullTimePointsHome {
+				t.Errorf("want %d, got %d", test.wantFullTimePointsHome, homeResultFullTime.Points)
 			}
-			if awayResultFullTime.points != test.wantFullTimePointsAway {
-				t.Errorf("want %d, got %d", test.wantFullTimePointsAway, awayResultFullTime.points)
+			if awayResultFullTime.Points != test.wantFullTimePointsAway {
+				t.Errorf("want %d, got %d", test.wantFullTimePointsAway, awayResultFullTime.Points)
 			}
 		})
 	}

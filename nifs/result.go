@@ -1,7 +1,7 @@
 package nifs
 
 type Result struct {
-	teamName string
-	points   int
-	goals    int
+	TeamName string
+	Points   int
+	Goals    int
 }
