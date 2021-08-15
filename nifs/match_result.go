@@ -17,7 +17,3 @@ func NewMatchResult(teamId int, teamName string, points int, goals int, goalsAga
 		GoalsAgainst: goalsAgainst,
 	}
 }
-
-func (r *MatchResult) GoalDiff() int {
-	return r.Goals - r.GoalsAgainst
-}
