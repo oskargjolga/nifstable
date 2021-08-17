@@ -4,15 +4,7 @@ import (
 	"time"
 )
 
-func (match *Match) GetHomeTeamName() string {
-	return match.HomeTeam.Name
-}
-
-func (match *Match) GetAwayTeamName() string {
-	return match.AwayTeam.Name
-}
-
-func (match *Match) GetMatchResults(halftime bool) []MatchResult {
+func (match *Match) GetResults(halftime bool) []MatchResult {
 	results := make([]MatchResult, 0)
 	results = append(results, match.GetHomeTeamResult(halftime))
 	results = append(results, match.GetAwayTeamResult(halftime))
@@ -44,46 +36,6 @@ func (match *Match) GetAwayTeamResult(halftime bool) MatchResult {
 		result.GoalsAgainst = match.Result.HomeScore90
 	}
 	return result
-}
-
-func (match *Match) getAwayTeamPoints(halftime bool) int {
-	if halftime {
-		if match.Result.AwayScore45 > match.Result.HomeScore45 {
-			return 3
-		} else if match.Result.AwayScore45 == match.Result.HomeScore45 {
-			return 1
-		} else {
-			return 0
-		}
-	} else {
-		if match.Result.AwayScore90 > match.Result.HomeScore90 {
-			return 3
-		} else if match.Result.AwayScore90 == match.Result.HomeScore90 {
-			return 1
-		} else {
-			return 0
-		}
-	}
-}
-
-func (match *Match) getHomeTeamPoints(halftime bool) int {
-	if halftime {
-		if match.Result.HomeScore45 > match.Result.AwayScore45 {
-			return 3
-		} else if match.Result.HomeScore45 == match.Result.AwayScore45 {
-			return 1
-		} else {
-			return 0
-		}
-	} else {
-		if match.Result.HomeScore90 > match.Result.AwayScore90 {
-			return 3
-		} else if match.Result.HomeScore90 == match.Result.AwayScore90 {
-			return 1
-		} else {
-			return 0
-		}
-	}
 }
 
 // Generated using https://mholt.github.io/json-to-go/
@@ -226,4 +178,44 @@ type Match struct {
 		FiksMatchNumber int64 `json:"fiksMatchNumber"`
 	} `json:"externalIds"`
 	SportID int `json:"sportId"`
+}
+
+func (match *Match) getAwayTeamPoints(halftime bool) int {
+	if halftime {
+		if match.Result.AwayScore45 > match.Result.HomeScore45 {
+			return 3
+		} else if match.Result.AwayScore45 == match.Result.HomeScore45 {
+			return 1
+		} else {
+			return 0
+		}
+	} else {
+		if match.Result.AwayScore90 > match.Result.HomeScore90 {
+			return 3
+		} else if match.Result.AwayScore90 == match.Result.HomeScore90 {
+			return 1
+		} else {
+			return 0
+		}
+	}
+}
+
+func (match *Match) getHomeTeamPoints(halftime bool) int {
+	if halftime {
+		if match.Result.HomeScore45 > match.Result.AwayScore45 {
+			return 3
+		} else if match.Result.HomeScore45 == match.Result.AwayScore45 {
+			return 1
+		} else {
+			return 0
+		}
+	} else {
+		if match.Result.HomeScore90 > match.Result.AwayScore90 {
+			return 3
+		} else if match.Result.HomeScore90 == match.Result.AwayScore90 {
+			return 1
+		} else {
+			return 0
+		}
+	}
 }

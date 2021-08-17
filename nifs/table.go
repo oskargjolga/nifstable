@@ -12,9 +12,15 @@ import (
 type Table struct {
 	Name         string
 	TableEntries []TableEntry
+	entryMap     map[int]TableEntry
 }
 
 func (t *Table) Render() {
+	for _, v := range t.entryMap {
+		t.TableEntries = append(t.TableEntries, v)
+	}
+	sort.Sort(ByPointsAndGoalDiff(t.TableEntries))
+
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Pos", "Club", "P", "W", "D", "L", "GF", "GA", "GD", "Pts"})
 	for i, entry := range t.TableEntries {
@@ -37,35 +43,25 @@ func (t *Table) Render() {
 func NewTable(matches []Match, halftime bool) *Table {
 	table := &Table{}
 	table.Name = "Eliteserien 2020"
-	m := make(map[int]TableEntry)
+	table.entryMap = make(map[int]TableEntry)
 	for _, match := range matches {
-		homeTeamResult := match.GetHomeTeamResult(halftime)
-		if !homeTeamResult.HasResult {
-			continue
-		}
-		awayTeamResult := match.GetAwayTeamResult(halftime)
-		if val, ok := m[homeTeamResult.TeamId]; ok {
-			val.AddResult(homeTeamResult)
-			m[homeTeamResult.TeamId] = val
-		} else {
-			entry := TableEntry{TeamName: match.GetHomeTeamName()}
-			entry.AddResult(homeTeamResult)
-			m[homeTeamResult.TeamId] = entry
-		}
-
-		if val, ok := m[awayTeamResult.TeamId]; ok {
-			val.AddResult(awayTeamResult)
-			m[awayTeamResult.TeamId] = val
-		} else {
-			entry := TableEntry{TeamName: match.GetAwayTeamName()}
-			entry.AddResult(awayTeamResult)
-			m[awayTeamResult.TeamId] = entry
-		}
+		table.AddMatchResults(match, halftime)
 	}
-	for _, v := range m {
-		table.TableEntries = append(table.TableEntries, v)
-	}
-	sort.Sort(ByPointsAndGoalDiff(table.TableEntries))
-
 	return table
+}
+
+func (t *Table) AddMatchResults(match Match, halftime bool) {
+	for _, result := range match.GetResults(halftime) {
+		if !result.HasResult {
+			return
+		}
+		if entry, ok := t.entryMap[result.TeamId]; ok {
+			entry.AddResult(result)
+			t.entryMap[result.TeamId] = entry
+		} else {
+			entry := TableEntry{TeamName: result.TeamName}
+			entry.AddResult(result)
+			t.entryMap[result.TeamId] = entry
+		}
+	}
 }
