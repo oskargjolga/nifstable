@@ -12,6 +12,13 @@ func (match *Match) GetAwayTeamName() string {
 	return match.AwayTeam.Name
 }
 
+func (match *Match) GetMatchResults(halftime bool) []MatchResult {
+	results := make([]MatchResult, 0)
+	results = append(results, match.GetHomeTeamResult(halftime))
+	results = append(results, match.GetAwayTeamResult(halftime))
+	return results
+}
+
 func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
 	result := NewMatchResult(match.HomeTeam.ID, match.HomeTeam.Name, match.getHomeTeamPoints(halftime))
 	if match.MatchStatusID != 2 {
