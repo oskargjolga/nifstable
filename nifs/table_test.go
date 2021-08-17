@@ -46,7 +46,7 @@ func TestTableOrder(t *testing.T) {
 	matches := nifsClient.FetchMatches("5", "682936")
 	table := NewTable(matches, false)
 
-	for i, entry := range table.TableEntries {
+	for i, entry := range table.TableEntries() {
 		if entry.TeamName != wantOrder[i] {
 			t.Errorf("want %s got %s", wantOrder[i], entry.TeamName)
 		}

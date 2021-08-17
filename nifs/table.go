@@ -11,18 +11,22 @@ import (
 
 type Table struct {
 	Name     string
-	entryMap map[int]TableEntry
+	EntryMap map[int]TableEntry
 }
 
-func (t *Table) Render() {
+func (t *Table) TableEntries() []TableEntry {
 	var tableEntries = []TableEntry{}
-	for _, v := range t.entryMap {
+	for _, v := range t.EntryMap {
 		tableEntries = append(tableEntries, v)
 	}
 	sort.Sort(ByPointsAndGoalDiff(tableEntries))
+	return tableEntries
+}
+
+func (t *Table) Render() {
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Pos", "Club", "P", "W", "D", "L", "GF", "GA", "GD", "Pts"})
-	for i, entry := range tableEntries {
+	for i, entry := range t.TableEntries() {
 		table.Append([]string{
 			fmt.Sprintf("#%d", i+1),
 			entry.TeamName,
@@ -42,25 +46,24 @@ func (t *Table) Render() {
 func NewTable(matches []Match, halftime bool) *Table {
 	table := &Table{}
 	table.Name = "Eliteserien 2020"
-	table.entryMap = make(map[int]TableEntry)
+	table.EntryMap = make(map[int]TableEntry)
 	for _, match := range matches {
-		table.AddMatchResults(match, halftime)
+		if match.MatchStatusID != 2 { // Not started (Also "result unknown")
+			table.AddMatchResults(match, halftime)
+		}
 	}
 	return table
 }
 
 func (t *Table) AddMatchResults(match Match, halftime bool) {
 	for _, result := range match.GetResults(halftime) {
-		if !result.HasResult {
-			return
-		}
-		if entry, ok := t.entryMap[result.TeamId]; ok {
+		if entry, ok := t.EntryMap[result.TeamId]; ok {
 			entry.AddResult(result)
-			t.entryMap[result.TeamId] = entry
+			t.EntryMap[result.TeamId] = entry
 		} else {
 			entry := TableEntry{TeamName: result.TeamName}
 			entry.AddResult(result)
-			t.entryMap[result.TeamId] = entry
+			t.EntryMap[result.TeamId] = entry
 		}
 	}
 }

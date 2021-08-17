@@ -3,7 +3,6 @@ package nifs
 type MatchResult struct {
 	TeamId       int
 	TeamName     string
-	HasResult    bool
 	Points       int
 	Goals        int
 	GoalsAgainst int

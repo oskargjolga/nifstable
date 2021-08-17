@@ -13,9 +13,6 @@ func (match *Match) GetResults(halftime bool) []MatchResult {
 
 func (match *Match) GetHomeTeamResult(halftime bool) MatchResult {
 	result := NewMatchResult(match.HomeTeam.ID, match.HomeTeam.Name, match.getHomeTeamPoints(halftime))
-	if match.MatchStatusID != 2 {
-		result.HasResult = true
-	}
 	if halftime {
 		result.Goals = match.Result.HomeScore45
 		result.GoalsAgainst = match.Result.AwayScore45
