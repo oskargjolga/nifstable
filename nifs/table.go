@@ -10,20 +10,19 @@ import (
 )
 
 type Table struct {
-	Name         string
-	TableEntries []TableEntry
-	entryMap     map[int]TableEntry
+	Name     string
+	entryMap map[int]TableEntry
 }
 
 func (t *Table) Render() {
+	var tableEntries = []TableEntry{}
 	for _, v := range t.entryMap {
-		t.TableEntries = append(t.TableEntries, v)
+		tableEntries = append(tableEntries, v)
 	}
-	sort.Sort(ByPointsAndGoalDiff(t.TableEntries))
-
+	sort.Sort(ByPointsAndGoalDiff(tableEntries))
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Pos", "Club", "P", "W", "D", "L", "GF", "GA", "GD", "Pts"})
-	for i, entry := range t.TableEntries {
+	for i, entry := range tableEntries {
 		table.Append([]string{
 			fmt.Sprintf("#%d", i+1),
 			entry.TeamName,
