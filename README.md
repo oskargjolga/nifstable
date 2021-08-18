@@ -35,7 +35,7 @@ Build image:
 ```bash
 docker build --tag nifstable .
 ```
-Run image in a Docker container:
+Run image as a container:
 ```bash
 docker run nifstable
 ```
