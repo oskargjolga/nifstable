@@ -5,24 +5,41 @@
 ## Getting Started
 
 ### Dependencies
-* Recent version of golang or docker installed
+* Recent version of Golang or Docker installed
 
 ### Clone
 ```bash
 git clone https://github.com/oskargjolga/nifstable.git
 ```
-### Executing Program if Golang is Installed
-* `go run main.go` will compute a table based on full time results
-* `go run main.go -halftime` will compute a table based on half time results
-
-### Executing Program in a Docker Container
-#### Using the Makefile
-* `make table` for fulltime results
-* `make table-halftime` for halftime results
+### Usage (if Golang is Installed)
+Compute a table based on full time results:
+```bash
+go run main.go
+```
+Compute a table based on half time results:
+```bash
+go run main.go - halftime
+```
+### Usage (Docker Container)
+#### With Make
+```bash
+make table
+```
+or:
+```bash
+make table-halftime
+```
 
 #### Without Make
-* `docker build --tag nifstable`
-* `docker run nifstable` for fulltime results
-* `docker run nifstable -halftime` for halftime results
-
-
+Build image:
+```bash
+docker build --tag nifstable
+```
+Run image in a Docker container:
+```bash
+docker run nifstable
+```
+or:
+```bash
+docker run nifstable -halftime
+```
