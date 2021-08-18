@@ -33,7 +33,7 @@ make table-halftime
 #### Without Make
 Build image:
 ```bash
-docker build --tag nifstable
+docker build --tag nifstable .
 ```
 Run image in a Docker container:
 ```bash
